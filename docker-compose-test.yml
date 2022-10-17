@@ -1,0 +1,20 @@
+services:
+  drivenops_test_db:
+    image: postgres
+    container_name: drivenops_test_db
+    restart: always
+    ports:
+      - 2345:5432
+    env_file:
+      - back-end/.env.test
+
+  node_drivenops_test_app:
+    container_name: node_drivenops_test_app
+    build: ./back-end
+    image: node_drivenops_test_app_image
+    ports:
+      - 5000:5000
+    depends_on:
+      - drivenops_test_db
+    env_file:
+      - back-end/.env.test
